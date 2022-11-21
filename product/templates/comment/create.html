@@ -1,0 +1,23 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block content %}
+
+{% if submitted %}
+<h1>New comment is successfully added!</h1><br>
+<a  class="btn btn-outline-dark" href="{% url 'store' %}">&#x2190; Back to store</a>
+<center>
+    <img src ="{% static 'img/success_tick.jpg' %}">
+</center>
+{% else %}
+
+<h1>Add a comment</h1>   
+
+<!-- Start comment Form--> 
+<form action = "" method = "POST" >
+    {% csrf_token %}
+    {{form.as_p}}
+    <input class = "btn btn-dark" type = "submit" value ="Submit">
+</form>
+<!-- End comment Form--> 
+{% endif %}
+{% endblock content %}

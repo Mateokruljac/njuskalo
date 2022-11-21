@@ -1,0 +1,50 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+<!-- Start File Content -->
+{% block content %}
+
+<div class = "row">
+    <!--product card -->
+    <div class = "col-lg-12">
+        <h3 style ="float:right;display:inline-block">{{product.price|floatformat:"2"}} $</h3>    
+        {% if product.image %}
+        <img class ="detailimage" src = "{{product.image.url}}">
+        {% else %}
+        <img class ="detailimage" src = "{% static 'img/placeholder.jpg' %}">
+        {% endif %}
+
+        <div class = "box-element product">
+            <div class = "row">
+                <div class ="col-5">
+                    <h6><strong>Product:  {{product.name}}    </strong></h6>
+                </div>
+            </div>         
+
+
+    </div>
+    <div class = "box-element bg-secondary">
+        <div class = "row">
+            <div class = "col-lg-5">
+        
+                <strong>Comments</strong></br>
+                <hr>
+                {% for  comment in comments %}
+                <small><strong>Title: </strong>{{comment.title}}                      
+                    {% if request.user == comment.owner %}
+                    <a href  = "{% url 'delete_comment' product.id comment.id %}" style = "color:black"> Delete </a>
+                    {% endif %}
+                </small>
+                <p>{{comment.body|safe}}</p>
+                <small><strong>Owner:  </strong>{{comment.owner|title}}</small>
+                <small><strong>   Date added  </strong>{{comment.date_added.day}}.{{comment.date_added.month}}.{{comment.date_added.year}}.   {{comment.date_added.hour}}:{{comment.date_added.minute}}</small><hr>
+                {% endfor %}
+            </div>
+                        
+     
+                    
+  </div>
+
+                    
+{% endblock content %}
+<!-- End File Content -->

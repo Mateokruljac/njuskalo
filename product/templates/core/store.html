@@ -1,0 +1,48 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block content %}
+<div class = "row">
+    <div class ="col-lg-4">
+        <img class = "thumbnail btn-dark">
+        <div class = "box-element product">
+            <a href = "{% url 'create_product' %}" style = "color:rgb(0,0,0,0.7)" id ="add-one"><b>Click here to create a product</b></a>
+            <hr>
+        
+            <button class ="btn btn-secondary add-btn hover-color">+ Add to cart</button>
+            <a class ="btn btn-outline-dark" href = "#">View</a>
+            <h4 style ="display:inline-block;float:right">$0.00</h4>
+        </div>
+    </div>
+    {% for product in products %}
+    <div class ="col-lg-4">
+         {% if product.image %}
+        <img class = "thumbnail" src ={{product.image.url}}>
+        {% else %}
+        <img class = "thumbnail" src = {% static 'img/placeholder.jpg' %}>
+        {% endif %}
+        <div class = "box-element product">
+            <h6><b>{{product.name}}</b></h6>
+            <hr>
+            {% if request.user != product.owner %}
+            <button class ="btn btn-secondary add-btn update-cart" data-product ={{product.id}} data-action ="add">+ Add to cart</button>
+            {% endif %}
+            <a class ="btn btn-outline-dark hover-color" href = "{% url 'detail_product' product.id %}">View</a>
+            <h4 style ="display:inline-block;float:right">${{product.price}}</h4>
+        </div>
+    </div>
+    
+     {% endfor %}
+    </div>
+</div>
+<script>
+    var user = "{{request.user}}" 
+    var addProduct = document.getElementById("add-one");
+    if (user == "AnonymousUser"){
+        addProduct.addEventListener("click",function(){
+            document.getElementById("add-one").removeAttribute("href")
+            alert("You must be logged in if you want to create your product!")
+            window.location.href = "{% url 'store' %}"
+        })
+    }
+</script>
+{% endblock content %}

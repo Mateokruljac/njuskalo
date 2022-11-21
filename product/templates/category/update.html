@@ -1,0 +1,23 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block content %}
+
+{% if updated %}
+<h1>{{category.title|title}} is successfully updated!</h1><br>
+<a  class="btn btn-outline-dark" href="{% url 'category_list' %}">&#x2190; Back</a>
+<center>
+    <img src ="{% static 'img/success_tick.jpg' %}">
+</center>
+{% else %}
+
+<h1>Update {{category.title|title}}</h1>   
+
+<!-- Start Category Form--> 
+<form action = "" method = "POST" enctype = "multipart/form-data">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input class = "btn btn-dark" type = "submit" value ="Save">
+</form>
+<!-- End Category Form--> 
+{% endif %}
+{% endblock content %}

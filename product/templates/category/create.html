@@ -1,0 +1,23 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block content %}
+
+{% if submitted %}
+<h1>New category is successfully created!</h1><br>
+<a  class="btn btn-outline-dark" href="{% url 'category_list' %}">&#x2190; Back</a>
+<center>
+    <img src ="{% static 'img/success_tick.jpg' %}">
+</center>
+{% else %}
+
+<h1>Add a new category</h1>   
+
+<!-- Start category Form--> 
+<form action = "" method = "POST" >
+    {% csrf_token %}
+    {{form.as_p}}
+    <input class = "btn btn-dark" type = "submit" value ="Submit">
+</form>
+<!-- End category Form--> 
+{% endif %}
+{% endblock content %}
